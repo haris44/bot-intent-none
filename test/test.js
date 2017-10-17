@@ -1,24 +1,39 @@
 import 'process'
+
 import test from 'ava'
-import { connexion } from '../lib/rabbitFake'
-import { assertQueue } from '../src/rabbitUtils'
+import proxyquire from 'proxyquire'
+import { fakeConnexion } from '../lib/fakeConnexion'
+import { assertQueue, sendTo } from '../src/rabbitUtils'
 
+proxyquire.noPreserveCache()
 
-const assertQueueTest = (connexion) => {
-    return new Promise((resolve, reject) => {
-        assertQueue(connexion, resolve)
-        connexion.then((conn) => conn.sendToConsumer('none.queue', '{ "test" : "test"}'))
-    })
-}
-
-test(t => {
-
+test.beforeEach(() => {
     process.env.RABBIT_EXCHANGE = 'exchange'
     process.env.RABBIT_INTENT_API_BINDING = 'api.binding'
     process.env.RABBIT_INTENT_NONE_QUEUE = 'none.queue'
     process.env.RABBIT_INTENT_NONE_BINDING = 'none.binding'
+})
 
-    return assertQueueTest(connexion).then((msg) => {
-        t.pass()
+test(t => {
+    const message = 'test'
+    assertQueue(fakeConnexion, (msg) => t.deepEqual(message, msg.content))
+    return fakeConnexion.then((conn) => conn.sendToConsumer('none.queue', '{ "content" : "' + message + '"}'))
+})
+
+test(t => {
+    const message = 'test'
+    sendTo(fakeConnexion, message)
+    return fakeConnexion.then((conn) => {
+        t.deepEqual(new Buffer(message), conn.getPublished()[0].buffer)
     })
+})
+
+test(t => {
+    const connexion = { connect: true }
+    const amqplibMock = { 'amqplib/callback_api': { 'connect': (url, fn) => fn('', connexion) } }
+    const rabbitConnexion = proxyquire('../src/rabbitConnexion', amqplibMock)
+    return rabbitConnexion.connexion().then((conn) => {
+        t.deepEqual(connexion.connect, conn.connect)
+    })
+
 })
