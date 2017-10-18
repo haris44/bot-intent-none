@@ -1,10 +1,9 @@
 import { connexion } from './rabbitConnexion'
 import { assertQueue, sendTo } from './rabbitUtils'
+import { logic } from './logic'
 
 const connexionEstablished = connexion()
 
 assertQueue(connexionEstablished, ($message) => {
-    const newMessage = Object.assign($message.message, { content: 'Je n\'ai malheuresement pas compris ton message' })
-    const newIntentMessage = Object.assign($message, { message: newMessage })
-    sendTo(connexionEstablished, JSON.stringify(newIntentMessage))
+    sendTo(connexionEstablished, JSON.stringify(logic($message)))
 })
