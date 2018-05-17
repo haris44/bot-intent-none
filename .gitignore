@@ -8,6 +8,8 @@ pids
 *.pid
 *.seed
 
+.env
+dist
 
 .env
 dist
