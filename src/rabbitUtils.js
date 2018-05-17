@@ -13,7 +13,7 @@ export const assertQueue = (connexion, callback) => {
     connexion.then(conn => {
         conn.createChannel(function (err, ch) {
             ch.assertExchange(env.exchange, 'topic', { durable: true })
-            ch.assertQueue(env.queue, { durable: false }, function (err, q) {
+            ch.assertQueue(env.queue, { durable: true }, function (err, q) {
                 console.log(' [*] Waiting for logs. To exit press CTRL+C')
 
                 ch.bindQueue(q.queue, env.exchange, env.binding)

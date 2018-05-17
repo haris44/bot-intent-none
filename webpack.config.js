@@ -12,9 +12,9 @@ module.exports = {
         filename: 'bundle.js'
     },
     module: {
-        loaders: [{
+        rules: [{
             test: /\.js?/,
-            include: APP_DIR,
+            exclude: /node_modules/,
             loader: 'babel-loader'
         }]
     }
