@@ -10,8 +10,8 @@ proxyquire.noPreserveCache()
 test.beforeEach(() => {
     process.env.RABBIT_EXCHANGE = 'exchange'
     process.env.RABBIT_INTENT_API_BINDING = 'api.binding'
-    process.env.RABBIT_INTENT_NONE_QUEUE = 'none.queue'
-    process.env.RABBIT_INTENT_NONE_BINDING = 'none.binding'
+    process.env.RABBIT_INTENT_HELLO_QUEUE = 'none.queue'
+    process.env.RABBIT_INTENT_HELLO_BINDING = 'none.binding'
 })
 
 test(t => {

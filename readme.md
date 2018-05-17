@@ -1,5 +1,6 @@
-## Bot-Intent-None
+# bot-intent-hello
+Bot intent hello for Thoune bot framework
 
-[![Build Status](https://travis-ci.org/haris44/bot-intent-none.svg?branch=master)](https://travis-ci.org/haris44/bot-intent-none)
+[![Build Status](https://travis-ci.org/haris44/bot-intent-hello.svg?branch=master)](https://travis-ci.org/haris44/bot-intent-hello)
 
-[![Coverage Status](https://coveralls.io/repos/github/haris44/bot-intent-none/badge.svg?branch=master)](https://coveralls.io/github/haris44/bot-intent-none?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/haris44/bot-intent-hello/badge.svg?branch=master)](https://coveralls.io/github/haris44/bot-intent-hello?branch=master)
